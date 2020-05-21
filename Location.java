@@ -24,10 +24,14 @@ public class Location
         this(0, 0);
     }
 
-    public boolean equals(Location dest)
+    public boolean equals(Object dest)
     {
-        if (this.xCoord == dest.xCoord && this.yCoord == dest.yCoord)
-            return true;
+        if (dest instanceof Location)
+        {
+            Location destination = (Location) dest;
+            if (xCoord == destination.xCoord && yCoord == destination.yCoord)
+                return true;
+        }
         return false;
     }
     public int hashCode()

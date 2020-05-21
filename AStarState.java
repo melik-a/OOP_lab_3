@@ -1,5 +1,4 @@
 import java.util.HashMap;
-//import java.util.Map;
 /**
  * This class stores the basic state necessary for the A* algorithm to compute a
  * path across a map.  This state includes a collection of "open waypoints" and
@@ -27,8 +26,8 @@ public class AStarState
 
         this.map = map;
         //инициализация новых пустых коллекций
-        openWayPoint = new HashMap<>();
-        closedWayPoint = new HashMap<>();
+        openWayPoint = new HashMap<Location,Waypoint>();
+        closedWayPoint = new HashMap<Location,Waypoint>();
     }
 
     /** Returns the map that the A* pathfinder is navigating. **/
@@ -49,23 +48,18 @@ public class AStarState
         if (openWayPoint.isEmpty())
             return null;
 
-        float min = 0;
-        Location minLoc = new Location();
+        float min = Float.MAX_VALUE;
+        Waypoint minWP = null;
         
-        for(Location i : openWayPoint.keySet())
+        for(Waypoint i : openWayPoint.values())
         {
-            if(openWayPoint.get(i).getPrevious() == null)
+            if(i.getTotalCost() < min)
             {
-                min = openWayPoint.get(i).getRemainingCost();
-                minLoc = i;
-            }
-            else if(openWayPoint.get(i).getRemainingCost() < min)
-            {
-                minLoc = i;
-                min = openWayPoint.get(i).getRemainingCost();
+                minWP = i;
+                min = i.getTotalCost();
             }
         }
-        return openWayPoint.get(minLoc);
+        return minWP;
     }
 
     /**
@@ -79,15 +73,14 @@ public class AStarState
      **/
     public boolean addOpenWaypoint(Waypoint newWP)
     {
-        // TODO:  Implement.
-        if(!openWayPoint.containsKey(newWP.loc))
+        if(!openWayPoint.containsKey(newWP.getLocation()))
         {   
-            openWayPoint.put(newWP.loc,newWP);
+            openWayPoint.put(newWP.getLocation(),newWP);
             return true;
         }
-        else if(newWP.getRemainingCost() < openWayPoint.get(newWP.loc).getRemainingCost())
+        else if(newWP.getPreviousCost() < openWayPoint.get(newWP.getLocation()).getPreviousCost())
         {
-            openWayPoint.put(newWP.loc,newWP);
+            openWayPoint.put(newWP.getLocation(),newWP);
             return true;
         }
         return false;
