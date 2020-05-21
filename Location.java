@@ -23,4 +23,18 @@ public class Location
     {
         this(0, 0);
     }
+
+    public boolean equals(Location dest)
+    {
+        if (this.xCoord == dest.xCoord && this.yCoord == dest.yCoord)
+            return true;
+        return false;
+    }
+    public int hashCode()
+    {
+        int result = 1;
+        result = 31 * result + Integer.hashCode(xCoord);
+        result = 31 * result + Integer.hashCode(yCoord);
+        return result;
+    }
 }

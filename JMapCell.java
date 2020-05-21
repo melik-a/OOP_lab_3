@@ -1,6 +1,6 @@
 import java.awt.*;
 import javax.swing.*;
-import javax.swing.border.*;
+//import javax.swing.border.*;
 
 
 /**
@@ -10,6 +10,11 @@ import javax.swing.border.*;
  */
 public class JMapCell extends JComponent
 {
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
+
     private static final Dimension CELL_SIZE = new Dimension(12, 12);
     
     /** True indicates that the cell is an endpoint, either start or finish. **/
